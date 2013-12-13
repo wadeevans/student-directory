@@ -9,15 +9,12 @@ students = [
 ]
 
 
-# andf then print the list of students
+# and then print the list of students
 puts "The students of my cohort at Makers Academy"
 puts "----------------------"
 students.each do |student|
 	puts student
 end
-
-
-
 
 # then we print the total
 puts "Overall, we have #{students.length} great students"
