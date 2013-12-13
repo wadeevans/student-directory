@@ -43,8 +43,32 @@ def print_students(students)
 	end
 end
 
-def print_footer(names)
-	puts "Overall, we have #{names.length} great students"
+def print_students_using_while(students)
+	i = 0
+	while i < students.length
+		puts "#{i + 1}: #{students[i][:name]} (#{students[i][:cohort]} cohort)} "
+		i += 1
+	end
+end
+
+def print_students_beginning_with_A(students)
+	students.each_with_index do |student, index|
+		if student[:name][0] == 'A'
+			puts "#{index + 1}: #{student[:name]} (#{student[:cohort]} cohort)"
+		end
+	end
+end
+
+def print_students_with_less_than_12_chars(students)
+	students.each_with_index do |student, index|
+		if student[:name].length < 12
+			puts "#{index + 1}: #{student[:name]} (#{student[:cohort]} cohort)"
+		end
+	end
+end
+
+def print_footer(students)
+	puts "Overall, we have #{students.length} great students"
 end
 
 # nothing happens until we call the methods
@@ -52,5 +76,9 @@ end
 students = input_students()
 print_header
 print_students(students)
+# uncomment the lines below to test other methods
+# print_students_beginning_with_A(students)
+# print_students_with_less_than_12_chars(students)
+print_students_using_while(students)
 print_footer(students)
 
