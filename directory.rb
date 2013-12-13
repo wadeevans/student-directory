@@ -24,7 +24,9 @@ def input_students
 		else
 			puts "Now we have #{students.length} students"
 		end
+
 		# get another name
+		puts "Please enter another name or hit return to quit"
 		name = gets.chomp
 	end
 	# return the completed array of students
@@ -68,7 +70,11 @@ def print_students_with_less_than_12_chars(students)
 end
 
 def print_footer(students)
-	puts "Overall, we have #{students.length} great students"
+	if students.length == 1
+		puts "Overall, we have #{students.length} great student"
+	else
+		puts "Overall, we have #{students.length} great students"
+	end
 end
 
 # nothing happens until we call the methods
@@ -79,6 +85,6 @@ print_students(students)
 # uncomment the lines below to test other methods
 # print_students_beginning_with_A(students)
 # print_students_with_less_than_12_chars(students)
-print_students_using_while(students)
+# print_students_using_while(students)
 print_footer(students)
 
