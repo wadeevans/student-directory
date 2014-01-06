@@ -1,4 +1,4 @@
-
+#start of project section 2
 
 # method to add students add attributes
 def input_students
