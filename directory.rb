@@ -1,39 +1,56 @@
 #start of project section 2
 
+@students = []
 # Interactive_menu
 def interactive_menu
-	students = []
+	# students = []
 	loop do
-		# 1. print the menu and ask the user what to do
-		puts "1. Input the students"
-		puts "2. Show the students"
-		puts "9. Exit"
+		# 1. print menu and ask the user what to do
+		print_menu()
 		# 2. read the input and save it into a variable
-		selection = gets.chomp
+		selection = gets.chomp()
 		# 3. do what has been asked
-		case selection
-		when "1"
-			# input the students
-			students = input_students
-		when "2"
-			# show the students
-			print_header
-			print_students(students)
-			print_footer(students)
-		when "9"
-			# exit
-		else
-			puts "I don't understand, please try again"
-		end
+		process(selection)
 	end
 end
+
+def print_menu
+	# print the menu and ask the user what to do
+	puts "1. Input the students"
+	puts "2. Show the students"
+	puts "9. Exit"
+end
+
+def show_students
+	# show the students
+	print_header
+	print_students()
+	print_footer()
+end
+
+def process(selection)
+	case selection
+	when "1"
+		# input the students
+		@students = input_students
+	when "2"
+		# show the students
+		show_students()
+	when "9"
+		# exit
+		exit
+	else
+		puts "I don't understand, please try again"
+	end
+end
+
 
 # method to add students add attributes
 def input_students
 	printf "Please enter the student names\n"
 	puts "Hit return twice to quit entering names"
 	# create an empty array
-	students = []
+	# students = []
 	# get the first name and strip the newline from it
 	# name = gets.chomp
 	name = gets.delete "\n"
@@ -53,11 +70,11 @@ def input_students
 			country = :uk
 		end
 		# shovel (<<) student hash into array
-		students << {:name => name, :cohort => cohort, :country => country}
-		if students.length == 1
-			puts "Now we have #{students.length} student"
+		@students << {:name => name, :cohort => cohort, :country => country}
+		if @students.length == 1
+			puts "Now we have #{@students.length} student"
 		else
-			puts "Now we have #{students.length} students"
+			puts "Now we have #{@students.length} students"
 		end
 
 		# get another name
@@ -65,7 +82,7 @@ def input_students
 		name = gets.chomp
 	end
 	# return the completed array of students
-	students
+	@students
 end
 
 
@@ -74,20 +91,20 @@ def print_header
 	puts "----------------------"
 end
 # main print method for showing students
-def print_students(students)
-	students.each_with_index do |student, index|
+def print_students()
+	@students.each_with_index do |student, index|
 		puts "#{index + 1}: " + "#{student[:name]}".center(20) + " (#{student[:cohort]} cohort)"
 	end
 end
 # alternative methods for showing students and attributes
-def print_students_in_cohorts(students)
+def print_students_in_cohorts()
 
-	cohorts = students.map { |x| x[:cohort]}.uniq
+	cohorts = @students.map { |x| x[:cohort]}.uniq
 
 	puts cohorts
 	i = 0
 	while i < cohorts.length
-		students.each_with_index do |student, index|[:cohort]
+		@students.each_with_index do |student, index|[:cohort]
 			if student[:cohort] == cohorts[i]
 				puts "#{index + 1}: " + "#{student[:name]}".center(20) + " (#{student[:cohort]} cohort) (country of origin: #{student[:country]})"
 			end
@@ -99,41 +116,41 @@ def print_students_in_cohorts(students)
 	
 end
 # alternative methods for showing students and attributes
-def print_students_using_center(students)
-	students.each_with_index do |student, index|
+def print_students_using_center()
+	@students.each_with_index do |student, index|
 		puts "#{index + 1}: " + "#{student[:name]}".center(20) + " (#{student[:cohort]} cohort) (country of origin: #{student[:country]})"
 	end
 end
 # alternative methods for showing students and attributes
-def print_students_using_while(students)
+def print_students_using_while()
 	i = 0
-	while i < students.length
-		puts "#{i + 1}: #{students[i][:name]} (#{students[i][:cohort]} cohort)} "
+	while i < @students.length
+		puts "#{i + 1}: #{@students[i][:name]} (#{@students[i][:cohort]} cohort)} "
 		i += 1
 	end
 end
 # alternative methods for showing students and attributes
-def print_students_beginning_with_A(students)
-	students.each_with_index do |student, index|
+def print_students_beginning_with_A()
+	@students.each_with_index do |student, index|
 		if student[:name][0] == 'A'
 			puts "#{index + 1}: #{student[:name]} (#{student[:cohort]} cohort)"
 		end
 	end
 end
 # alternative methods for showing students and attributes
-def print_students_with_less_than_12_chars(students)
-	students.each_with_index do |student, index|
+def print_students_with_less_than_12_chars()
+	@students.each_with_index do |student, index|
 		if student[:name].length < 12
 			puts "#{index + 1}: #{student[:name]} (#{student[:cohort]} cohort)"
 		end
 	end
 end
 
-def print_footer(students)
-	if students.length == 1
-		puts "Overall, we have #{students.length} great student"
+def print_footer()
+	if @students.length == 1
+		puts "Overall, we have #{@students.length} great student"
 	else
-		puts "Overall, we have #{students.length} great students"
+		puts "Overall, we have #{@students.length} great students"
 	end
 end
 
