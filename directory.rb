@@ -18,16 +18,13 @@ def print_menu
 	# print the menu and ask the user what to do
 	puts "1. Input the students"
 	puts "2. Show the students"
+	puts "3. Save the list to students.csv"
+	puts "4. Load the list from students.csv"
 	puts "9. Exit"
 end
 
-def show_students
-	# show the students
-	print_header
-	print_students()
-	print_footer()
-end
 
+# Process menu selections
 def process(selection)
 	case selection
 	when "1"
@@ -36,6 +33,10 @@ def process(selection)
 	when "2"
 		# show the students
 		show_students()
+	when "3"
+		save_students
+	when "4"
+		load_students
 	when "9"
 		# exit
 		exit
@@ -44,6 +45,7 @@ def process(selection)
 	end
 end
 
+# Menu Options
 
 # method to add students add attributes
 def input_students
@@ -85,7 +87,14 @@ def input_students
 	@students
 end
 
+def show_students
+	# show the students
+	print_header
+	print_students()
+	print_footer()
+end
 
+# Print header
 def print_header
 	puts "The students of my cohort at Makers Academy"
 	puts "----------------------"
@@ -96,6 +105,38 @@ def print_students()
 		puts "#{index + 1}: " + "#{student[:name]}".center(20) + " (#{student[:cohort]} cohort)"
 	end
 end
+# Print footer
+def print_footer()
+	if @students.length == 1
+		puts "Overall, we have #{@students.length} great student"
+	else
+		puts "Overall, we have #{@students.length} great students"
+	end
+end
+
+# Save student list to CSV file
+def save_students
+	# open the file for writing
+	file = File.open("students.csv", "w")
+	# iterate over the array of students
+	@students.each do |student|
+		student_data = [student[:name], student[:cohort]]
+		csv_line = student_data.join(",")
+		file.puts csv_line
+	end
+	file.close
+end
+
+# Load students.csv file to @students array
+def load_students
+	file = File.open("students.csv", "r")
+	file.readlines.each do |line|
+		name, cohort = line.chomp.split(',')
+		@students << {:name => name, :cohort => cohort.to_sym}
+	end
+	file.close
+end
+
 # alternative methods for showing students and attributes
 def print_students_in_cohorts()
 
@@ -146,13 +187,7 @@ def print_students_with_less_than_12_chars()
 	end
 end
 
-def print_footer()
-	if @students.length == 1
-		puts "Overall, we have #{@students.length} great student"
-	else
-		puts "Overall, we have #{@students.length} great students"
-	end
-end
+
 
 
 interactive_menu()
