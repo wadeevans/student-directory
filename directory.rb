@@ -1,6 +1,23 @@
 #start of project section 2
 
 @students = []
+
+# Load file from command line argument if one given and file exists
+def try_load_students
+	filename = ARGV.first # first? argument from the command line
+	return if filename.nil? # get out of this method if no filename given
+	if File.exists?(filename)
+		load_students(filename)
+		puts "Loaded #{@students.length} students from #{filename}"
+	else # if file named doesn't exist
+		puts "Sorry, #{filename} does not exist."
+		exit # quit programme (do we want to do this??)
+	end
+end
+
+
+
+
 # Interactive_menu
 def interactive_menu
 	# students = []
@@ -8,7 +25,7 @@ def interactive_menu
 		# 1. print menu and ask the user what to do
 		print_menu()
 		# 2. read the input and save it into a variable
-		selection = gets.chomp()
+		selection = STDIN.gets.chomp()
 		# 3. do what has been asked
 		process(selection)
 	end
@@ -55,19 +72,19 @@ def input_students
 	# students = []
 	# get the first name and strip the newline from it
 	# name = gets.chomp
-	name = gets.delete "\n"
+	name = STDIN.gets.delete "\n"
 
 
 	# while name is not empty (return twice) run this loop
 	while !name.empty? do
 		puts "Please enter the cohort or hit return to enter default :january"
-		cohort = gets.chomp.to_sym
+		cohort = STDIN.gets.chomp.to_sym
 		if cohort.empty?
 			cohort = :january
 		end
 
 		puts "Please enter the country of origin or hit return to enter default :uk"
-		country = gets.chomp.to_sym
+		country = STDIN.gets.chomp.to_sym
 		if country.empty?
 			country = :uk
 		end
@@ -81,7 +98,7 @@ def input_students
 
 		# get another name
 		puts "Please enter another name or hit return to quit"
-		name = gets.chomp
+		name = STDIN.gets.chomp
 	end
 	# return the completed array of students
 	@students
@@ -128,8 +145,8 @@ def save_students
 end
 
 # Load students.csv file to @students array
-def load_students
-	file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+	file = File.open(filename, "r")
 	file.readlines.each do |line|
 		name, cohort = line.chomp.split(',')
 		@students << {:name => name, :cohort => cohort.to_sym}
@@ -189,7 +206,7 @@ end
 
 
 
-
+try_load_students()
 interactive_menu()
 # nothing happens until we call the methods
 
